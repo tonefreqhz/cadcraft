@@ -1,0 +1,124 @@
+{
+  "captured": "2026-10-24",
+  "source": "Read from the running apps and their public API with the browser; no credentials used.",
+  "prompted_configurator": {
+    "name": "Home@ix Launch Configurator",
+    "front_end": {
+      "url": "https://home-at-ix-configurator-front.up.railway.app/project/home-ix-ever-after-cottage",
+      "framework": "Nuxt 3 (Vue), Tailwind-style utility classes, Iconify icons (mdi, lucide, hugeicons, heroicons), nuxt-color-mode",
+      "viewer": "Sketchfab Viewer API 1.12.1 in an iframe; options show or hide named geometry nodes and assign materials",
+      "home_button_url": "https://homeatix.net/technology/home-ix-dashboard",
+      "hosting": "Railway"
+    },
+    "back_end": {
+      "url": "https://home-at-ix-configurator-back.up.railway.app",
+      "cms": "Strapi v5 (documentId fields), public REST API, media on Cloudinary (cloud dtqqilt3d)",
+      "endpoints": {
+        "global": "/api/global?populate=*",
+        "projects": "/api/projects",
+        "project_by_slug": "/api/projects?filters[slug][$eq]=home-ix-ever-after-cottage&populate[controls][populate][options][populate][controls][populate][options][populate]=*&populate[group_list]=*&populate[img_gen_styles]=*"
+      },
+      "global": {
+        "configurator_name": "HOME@IX",
+        "primary_color_light": "Green",
+        "gray_tone_light": "Stone",
+        "primary_color_dark": "Cyan",
+        "gray_tone_dark": "Zinc",
+        "favicon_name": "favicon_home-at-ix"
+      }
+    },
+    "data_model": {
+      "project": ["id", "name", "slug", "sketchfab_id", "description", "show_welcome_tab", "welcome_content", "show_metrics", "metrics_definitions", "show_img_gen", "controls[]", "group_list[]", "img_gen_styles[]"],
+      "group": ["group_name", "group_description", "group_icon"],
+      "control": ["name", "type (gallery | buttons | radio | select)", "belongs_to_group", "camera_view {target[3], position[3]}", "options[]"],
+      "option": ["name", "image", "geometry_name (Sketchfab node(s) to show; newline-separated for several)", "material_assignments {sketchfab material -> preset}", "metrics {property_price, embodied_carbon, carbon discount%}", "controls[] (nested controls that appear only when this option is selected)"],
+      "price_rule": "displayed price = metrics_definitions.property_price.base_value + sum of selected options' metrics.property_price; carbon likewise from embodied_carbon base_value"
+    },
+    "project": {
+      "id": 144,
+      "name": "HOME@IX Ever After Cottage",
+      "slug": "home-ix-ever-after-cottage",
+      "sketchfab_id": "0b1a7788cf2248dbba644f72d94353ff",
+      "metrics_definitions": {
+        "property_price": {"label": "Property Price", "unit": "GBP", "base_value": 249999, "icon": "i-hugeicons-coins-pound"},
+        "embodied_carbon": {"label": "Embodied Carbon", "unit": "tCO2e", "base_value": 41, "icon": "i-mi-cloud-download"}
+      },
+      "show_img_gen": true,
+      "groups": [
+        {"group_name": "Configuration", "group_icon": "i-mdi-house-edit-outline"},
+        {"group_name": "Facade", "group_icon": "i-mdi-wall"},
+        {"group_name": "Roof", "group_icon": "i-mdi-home-roof"},
+        {"group_name": "Canopy", "group_icon": "i-mdi-awning-outline"},
+        {"group_name": "Front Door", "group_icon": "i-mdi-door"},
+        {"group_name": "Windows", "group_icon": "i-mdi-window-closed-variant"},
+        {"group_name": "Technology", "group_icon": "i-mdi-heat-pump-outline"},
+        {"group_name": "Neighborhood", "group_icon": "i-mdi-neighbourhood"}
+      ],
+      "controls": [
+        {"name": "House Type", "type": "gallery", "group": "Configuration", "options": [
+          {"name": "Detached", "geometry_name": "stand-alone_88", "metrics": {"property_price": 0, "embodied_carbon": 0, "carbon discount%": 0},
+           "controls": [{"name": "Facade Composition", "type": "gallery", "options": [
+             {"name": "Full Red Brick", "geometry_name": "standalone_full-red-brick_768"},
+             {"name": "Brick and Render", "geometry_name": "standalone_brick-and-render_493"},
+             {"name": "Brick and Vertical Timber", "geometry_name": "standalone_brick-and-vertical-timber_487\ncommon_brick-and-vertical-timber_704"},
+             {"name": "Brick and Horizontal Timber", "geometry_name": "standalone_brick-and-horizontal-timber_501"},
+             {"name": "Stone and Render", "geometry_name": "standalone_stone-and-render_692\ncommon_stone-and-render_727"}]}]},
+          {"name": "End-Terrace", "geometry_name": "corner_3", "metrics": {"property_price": -5000, "embodied_carbon": -5, "carbon discount%": 200},
+           "controls": [{"name": "Facade Composition", "type": "gallery", "options": [
+             {"name": "Full Red Brick", "geometry_name": "corner_full-red-brick_741"},
+             {"name": "Brick and Render", "geometry_name": "corner_brick-and-render_724"},
+             {"name": "Brick and Vertical Timber"}, {"name": "Brick and Horizontal Timber"}, {"name": "Stone and Render"}]}]},
+          {"name": "Mid-Terrace", "geometry_name": "mid-terrace_92", "metrics": {"property_price": -10000, "embodied_carbon": -10, "carbon discount%": 400},
+           "controls": [{"name": "Facade Composition", "type": "gallery", "options": [
+             {"name": "Full Red Brick"}, {"name": "Brick and Render"}, {"name": "Brick and Vertical Timber"}, {"name": "Brick and Horizontal Timber"}, {"name": "Stone and Render"}]}]}
+        ]},
+        {"name": "Brick Bond", "type": "buttons", "group": "Facade", "options": [
+          {"name": "Strecher", "controls": [{"name": "Brick Color", "type": "gallery", "options": [{"name": "Red and Dark"}, {"name": "Red Multi"}, {"name": "Orange"}]}]},
+          {"name": "Flemish", "controls": [{"name": "Brick Color", "type": "gallery", "options": [{"name": "Red and Dark"}]}]}
+        ]},
+        {"name": "Render Color", "type": "buttons", "group": "Facade", "options": [{"name": "Lime", "material_preset": "lime"}, {"name": "White", "material_preset": "white"}]},
+        {"name": "Timber Color", "type": "gallery", "group": "Facade", "options": [{"name": "White", "material_preset": "white"}, {"name": "Black", "material_preset": "black"}, {"name": "Natural", "material_preset": "irish-oak"}]},
+        {"name": "Roof Color", "type": "gallery", "group": "Roof", "options": [{"name": "Red Slate", "material_preset": "red-slate-roof-tiles"}, {"name": "Brown Slate", "material_preset": "brown-slate-roof-tiles"}, {"name": "Dark Slate", "material_preset": "dark-slate-roof-tiles"}]},
+        {"name": "Roof Additions", "type": "radio", "group": "Roof", "options": [
+          {"name": "Solar Heat Collectors", "geometry_name": "solar-heat-collectors_80", "metrics": {"property_price": 0, "embodied_carbon": 1, "carbon discount%": 2000}},
+          {"name": "Photovoltaic Panels", "geometry_name": "photovoltaic-panels_176", "metrics": {"property_price": 0, "embodied_carbon": 1, "carbon discount%": 500}},
+          {"name": "None", "metrics": {"property_price": -4000, "embodied_carbon": 0, "carbon discount%": 0}}]},
+        {"name": "Canopy Type", "type": "gallery", "group": "Canopy", "options": [{"name": "Type 01", "geometry_name": "canopy_type-01_422"}, {"name": "Type 02", "geometry_name": "canopy_type-02_581"}, {"name": "Type 03", "geometry_name": "canopy_type-03_576"}, {"name": "Type 04", "geometry_name": "canopy_type-04_571"}]},
+        {"name": "Front Door Type", "type": "gallery", "group": "Front Door", "options": [{"name": "Type 01", "geometry_name": "front-door_type-01_672"}, {"name": "Type 02", "geometry_name": "front-door_type-02_650"}, {"name": "Type 03", "geometry_name": "front-door_type-03_660"}, {"name": "Type 04", "geometry_name": "front-door_type-04_680"}]},
+        {"name": "Front Door Color", "type": "select", "group": "Front Door", "options": [{"name": "Chartwell Green"}, {"name": "Duck Egg Blue"}, {"name": "Irish Oak"}, {"name": "Painswick Grey"}, {"name": "Black"}, {"name": "Anthracite Grey"}, {"name": "Tangerine"}, {"name": "Ruby Red"}]},
+        {"name": "Window Type", "type": "gallery", "group": "Windows", "options": [{"name": "Type 01", "geometry_name": "windows_type-01_608"}, {"name": "Type 02", "geometry_name": "windows_type-02_600"}, {"name": "Type 03", "geometry_name": "windows_type-03_593"}]},
+        {"name": "Frame Color", "type": "radio", "group": "Windows", "options": [{"name": "Anthracite Grey", "material_preset": "windows_brown"}, {"name": "Traffic White", "material_preset": "windows_gray"}]},
+        {"name": "Heat Pump", "type": "radio", "group": "Technology", "options": [
+          {"name": "Air Sourced Heat Pump", "geometry_name": "air-to-air-heat-pump_471", "metrics": {"property_price": 0, "embodied_carbon": 1, "carbon discount%": 4000}},
+          {"name": "None", "metrics": {"property_price": -3000, "embodied_carbon": 0, "carbon discount%": 0}}]},
+        {"name": "Surrounding Neighborhood", "type": "buttons", "group": "Neighborhood", "options": [{"name": "Show", "geometry_name": "standalone_surroundings_473\ncorner_surroundings_483\nmid-terrace_surroundings_478"}, {"name": "Hide"}]}
+      ],
+      "img_gen_styles": [
+        {"label": "Devon", "prompt": "a beautiful cinematic shot of a traditional detached house in the UK, Devon neighbourhood, newly built in traditional style, fresh look with respect of tradition, amazing architecture, clean fresh roof"},
+        {"label": "Herefordshire", "prompt": "a beautiful cinematic shot of a traditional detached house in the UK, Herefordshire neighbourhood, newly built in traditional style, fresh look with respect of tradition, amazing architecture, clean fresh roof"},
+        {"label": "Gloucestershire", "prompt": "a beautiful cinematic shot of a traditional detached house in the UK, Gloucestershire neighbourhood, newly built in traditional style, fresh look with respect of tradition, amazing architecture, clean fresh roof"},
+        {"label": "Norfolk (stone and render)", "prompt": "a beautiful cinematic shot of a traditional stone house in the UK, Norfolk neighbourhood, newly built in traditional style, fresh look with respect of tradition, amazing architecture, clean fresh tiled roof, natural limestone"},
+        {"label": "Norfollk (full red brick)", "prompt": "a beautiful cinematic shot of a traditional red brick house in the UK, Norfolk neighbourhood, newly built in traditional style, fresh look with respect of tradition, amazing architecture, clean fresh tiled roof, red and dark brick"},
+        {"label": "Norfolk (brick and render)", "prompt": "a beautiful cinematic shot of a traditional brick and render house in the UK, Norfolk neighbourhood, newly built in traditional style, fresh look with respect of tradition, amazing architecture, clean fresh tiled roof, low contrast, red brick on the ground floor, white render on the second floor"},
+        {"label": "Norfolk (brick and timber)", "prompt": "a beautiful cinematic shot of a traditional brick and timber house in the UK, Norfolk neighbourhood, newly built in traditional style, fresh look with respect of tradition, amazing architecture, clean fresh tiled roof, red brick on the ground floor, natural timber planks on the second floor"}
+      ],
+      "note": "Each img_gen_style carries one or two uploaded_style_id UUIDs (style reference images for the image generator). Nested Facade Composition and Brick Color option lists for End-Terrace, Mid-Terrace and Flemish were only partly read; the pattern is the same as for Detached and Strecher."
+    }
+  },
+  "natural_language_configurator": {
+    "name": "Home@ix House Preview (Sign Up Configurator, Natural Language)",
+    "url": "https://home-at-ix-img-gen.vercel.app/sign-up",
+    "front_end": "Single-page app, one Vite bundle (assets/index-*.js), hosted on Vercel; bottom bar: my designs, favourites, create (+), gallery, sign in; design card actions: price, share link, regenerate, delete",
+    "auth": "Clerk (development instance innocent-buzzard-98.clerk.accounts.dev); Apple, Google and Microsoft sign-in or email",
+    "back_end": "Convex (deafening-axolotl-117.convex.cloud) for data and server functions; the image generator is called from the server side (the bundle references OpenAI, prompt and generate but no provider endpoint is exposed to the browser)",
+    "viewer": "Sketchfab Viewer API 1.12.1 also loaded, so the same Ever After Cottage model can be shown",
+    "link_to_prompted": "The Strapi project carries show_img_gen: true and the img_gen_styles prompts above, so the prompted configurator hands a style prompt to the image generator; the two apps share the Home@ix brand chrome",
+    "not_inspected": "Pages behind sign-in were not opened (no account was created)."
+  },
+  "dataroom_v4_13apr2026": {
+    "url": "https://tonefreqhz.github.io/homeix/investor/cope_investor_dataroom_v4_13apr2026.html",
+    "configurator": "Listed as built by Creatomus (Renee Puusepp) on Node/Strapi/Postgres, live alpha at ixnow.info/Welcome; WS4 (Priority 3): dashboard, configurator and plot passport templates feature-complete for Cawdor pre-sales in Q2 to Q4 2026",
+    "potton_library": "50+ CAD/CAM-certified designs described as the final customer input for AI configurator training; WS3 refers to a 62-design library; heritage designs named: Waterford, Gransden, Denham, Wickhambrook, Caxton",
+    "database_hosting": "Hey Joe Flask server on port 8765 (WSL Ubuntu); ChromaDB v4 (19,896 docs, rebuilding 10 April); Ollama llama3.2:3b; ix-anchor-01 (LaCie 2TB, Ubuntu 24.04, IPFS, boot pending); Rochen VM1 (DoughForge corpus, Hugo, IPFS) and VM2 (Home@ix COPE, Flask, BIM) under Phase 3; TikiWiki KB; COPE Graph 174 nodes / 310+ edges (cover says 147 / 144)"
+  }
+}
